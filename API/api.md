@@ -40,6 +40,30 @@
 
 **https://github.com/Jeeyrr/DEVOIR-ROMEO/tree/main/API**
 
+#### 4. Ecrire le script de création de base de données puis un script de création d’un jeu de données.
+
+![](prog.png)
+
+**connexion base de donnée**
+
+![](connect.png)
+
+**base de donnée avion**
+
+![alt text](avion.png)
+
+**base de donnée technicien**
+
+![alt text](technicien.png)
+
+**base de donnée entretien**
+
+![alt text](entretien.png)
+
+
+
+
+
 
 
 
