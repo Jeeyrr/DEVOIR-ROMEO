@@ -1,30 +1,41 @@
-CREATE DATABASE IF NOT EXISTS gestion_avions;
-
-USE gestion_avions;
+CREATE DATABASE IF NOT EXISTS creationapi;
+USE creationapi;
 
 CREATE TABLE avions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    type VARCHAR(50) NOT NULL,
-    etat ENUM('en_service', 'en_maintenance', 'hors_service') NOT NULL,
-    date_derniere_maintenance DATE
+    immatriculation VARCHAR(20) NOT NULL,
+    marque VARCHAR(50) NOT NULL,
+    modele VARCHAR(50) NOT NULL,
+    UNIQUE KEY (immatriculation)
 );
 
 CREATE TABLE techniciens (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
-    competences TEXT,
-    disponibilite BOOLEAN DEFAULT TRUE
+    prenom VARCHAR(50) NOT NULL,
+    nom VARCHAR(50) NOT NULL,
+    age INT NOT NULL
 );
 
-CREATE TABLE maintenances (
+CREATE TABLE entretiens (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    id_avion INT NOT NULL,
-    id_technicien INT NOT NULL,
-    date_maintenance DATETIME NOT NULL,
-    description TEXT,
-    statut ENUM('planifiee', 'en_cours', 'terminee') NOT NULL,
-    FOREIGN KEY (id_avion) REFERENCES avions(id),
-    FOREIGN KEY (id_technicien) REFERENCES techniciens(id)
+    immatriculation VARCHAR(20) NOT NULL,
+    idTechnicien INT NOT NULL,  
+    dateEntretien DATE NOT NULL,
+    FOREIGN KEY (immatriculation) REFERENCES avions(immatriculation),
+    FOREIGN KEY (idTechnicien) REFERENCES techniciens(id)
 );
+
+INSERT INTO avions (immatriculation, marque, modele) VALUES
+('AA111AA', 'Boeing', '737'),
+('HH222HH', 'Airbus', 'A320'),
+('PP333PP', 'Phoenix', '260');
+
+INSERT INTO techniciens (prenom, nom, age) VALUES
+('Jeyron', 'JJ', 20),
+('Dylan', 'DO', 21),
+('Reda', 'RA', 24);
+
+INSERT INTO entretiens (immatriculation, idTechnicien, dateEntretien) VALUES
+('AA111AA', 1, '2024-12-10'),
+('HH222HH', 2, '2024-12-15'),
+('PP333PP', 3, '2024-12-12');

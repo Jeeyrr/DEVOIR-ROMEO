@@ -36,5 +36,11 @@
 
 **404 Not Found**
 
+#### 1.d Préciser le chemin du dépôt distant 
+
+**https://github.com/Jeeyrr/DEVOIR-ROMEO/tree/main/API**
+
+
+
 
 
