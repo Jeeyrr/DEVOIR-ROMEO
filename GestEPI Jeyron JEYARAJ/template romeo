@@ -1,3 +1,0 @@
-npm install -g @romgio/create-react-typescript-mui-app
-npm install -g yarn # Pas besoin de refaire cette commande si vous l'avez déjà fait pour le back
-npx @romgio/create-react-typescript-mui-app GestEPIFront
