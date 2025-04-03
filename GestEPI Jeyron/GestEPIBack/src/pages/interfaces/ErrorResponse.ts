@@ -1,7 +1,4 @@
-//********** Imports **********//
-import MessageResponse from "./MessageResponse";
-
-//********** Message **********//
-export default interface ErrorResponse extends MessageResponse {
+export default interface ErrorResponse {
+  message: string;
   stack?: string;
 }

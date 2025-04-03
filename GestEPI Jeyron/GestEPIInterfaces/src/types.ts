@@ -16,11 +16,6 @@ export interface User {
 export interface EPIType {
     id: string;
 }
-export interface Projet {
-    id: number;
-    nom: string;
-    statut: string;
-  }
   export interface EPI {
     id: number;
     marque: string;
