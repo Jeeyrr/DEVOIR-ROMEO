@@ -12,6 +12,7 @@ import {
   TableRow,
   Paper,
   IconButton,
+  MenuItem,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
@@ -19,27 +20,32 @@ import axios from "axios";
 interface Utilisateur {
   id: number;
   email: string;
-  mot_de_passe: string;
   role: string;
 }
+
+const roles = ["admin", "gestionnaire", "cordiste"];
 
 const GestionUtilisateurs = () => {
   const [utilisateurs, setUtilisateurs] = useState<Utilisateur[]>([]);
   const [email, setEmail] = useState("");
   const [mot_de_passe, setMotDePasse] = useState("");
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("cordiste");
 
   const roleHeader = localStorage.getItem("role");
 
-  useEffect(() => {
-    if (roleHeader !== "admin") return;
-
+  const fetchUtilisateurs = () => {
     axios
       .get("http://localhost:5500/api/utilisateurs", {
         headers: { role: roleHeader },
       })
       .then((res) => setUtilisateurs(res.data))
       .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    if (roleHeader === "admin") {
+      fetchUtilisateurs();
+    }
   }, [roleHeader]);
 
   const handleAdd = () => {
@@ -49,11 +55,11 @@ const GestionUtilisateurs = () => {
         { email, mot_de_passe, role },
         { headers: { role: roleHeader } }
       )
-      .then((res) => {
-        setUtilisateurs([...utilisateurs, res.data]);
+      .then(() => {
+        fetchUtilisateurs(); // ✅ Rafraîchissement automatique
         setEmail("");
         setMotDePasse("");
-        setRole("");
+        setRole("cordiste");
       })
       .catch((err) => console.error(err));
   };
@@ -63,9 +69,9 @@ const GestionUtilisateurs = () => {
       .delete(`http://localhost:5500/api/utilisateurs/${id}`, {
         headers: { role: roleHeader },
       })
-      .then(() =>
-        setUtilisateurs(utilisateurs.filter((user) => user.id !== id))
-      )
+      .then(() => {
+        setUtilisateurs(utilisateurs.filter((u) => u.id !== id));
+      })
       .catch((err) => console.error(err));
   };
 
@@ -89,11 +95,18 @@ const GestionUtilisateurs = () => {
           sx={{ mr: 2 }}
         />
         <TextField
+          select
           label="Rôle"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           sx={{ mr: 2 }}
-        />
+        >
+          {roles.map((r) => (
+            <MenuItem key={r} value={r}>
+              {r}
+            </MenuItem>
+          ))}
+        </TextField>
         <Button variant="contained" onClick={handleAdd}>
           Ajouter
         </Button>

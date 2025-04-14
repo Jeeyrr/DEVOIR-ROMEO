@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import {
+  Button,
   Container,
   TextField,
   Typography,
   MenuItem,
   Paper,
-  Button,
-  Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -28,9 +27,8 @@ const AjoutUtilisateur = () => {
         mot_de_passe: motDePasse,
         role,
       });
-
-      // ✅ Redirige après ajout
-      navigate("/utilisateurs");
+      // Redirection vers la liste avec rafraîchissement
+      navigate("/admin/utilisateurs");
     } catch (err: any) {
       console.error("Erreur lors de l'ajout :", err);
       if (err.response?.data?.message) {
@@ -81,18 +79,16 @@ const AjoutUtilisateur = () => {
             {error}
           </Typography>
         )}
-        <Box mt={3} textAlign="center">
+        <div
+          style={{ display: "flex", justifyContent: "space-between", marginTop: 24 }}
+        >
+          <Button variant="outlined" onClick={() => navigate(-1)}>
+            Retour
+          </Button>
           <Button variant="contained" onClick={handleSubmit}>
             Ajouter
           </Button>
-          <Button
-            variant="outlined"
-            onClick={() => navigate(-1)}
-            sx={{ ml: 2 }}
-          >
-            Retour
-          </Button>
-        </Box>
+        </div>
       </Paper>
     </Container>
   );
